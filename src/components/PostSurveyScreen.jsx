@@ -309,7 +309,7 @@ export default function PostSurveyScreen({ onSubmit }) {
 
   const isAllAnswered = 
     selectedHeadphone && 
-    selectedSoftDrinks.length >= 4 && 
+    selectedSoftDrinks.length >= 1 && 
     adDetail.trim() !== '' && 
     firstRemember.trim() !== '' && 
     adFeeling.trim() !== '' && 
@@ -370,7 +370,7 @@ export default function PostSurveyScreen({ onSubmit }) {
               <span className="post-survey-question-num">2)</span>
               <span className="post-survey-question-text">If Buying Soft Drinks Today, Which Brand Would You Now Consider?</span>
             </div>
-            <p className="post-survey-question-instruction">Select at least 4 brands to continue.</p>
+            <p className="post-survey-question-instruction">Select all that apply.</p>
             <div className="post-survey-options-grid">
               {softDrinkBrands.map(sd => (
                 <div

@@ -612,6 +612,7 @@ export default function PreSurveyScreen({ onSubmit }) {
           <button 
             type="submit" 
             className={`survey-submit-btn ${isAllAnswered ? 'dark-btn' : ''}`}
+            disabled={!isAllAnswered}
           >
             <span>Submit</span>
             <ArrowRightIcon />
