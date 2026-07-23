@@ -4,11 +4,70 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/test-taker-flow-design/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>test-taker-flow</title>
-    <script type="module" crossorigin src="/test-taker-flow-design/assets/index-DUo-fQXp.js"></script>
-    <link rel="stylesheet" crossorigin href="/test-taker-flow-design/assets/index-DnEIiTGn.css">
+    <title>Maiven Survey</title>
+    <style>
+      /* Completely hide Google Translate top banner, floating widget icon, popups, and badges */
+      .goog-te-banner-frame.skiptranslate,
+      iframe.goog-te-banner-frame,
+      .goog-te-balloon-frame,
+      #goog-gt-tt,
+      .goog-te-spinner-pos,
+      .goog-te-gadget,
+      .goog-te-gadget-icon,
+      [class*="VIpgJd"],
+      div[class*="VIpgJd"],
+      iframe[class*="VIpgJd"],
+      .VIpgJd-ZGain-eSvi3e,
+      .VIpgJd-yLi45b-r4n8fl,
+      .VIpgJd-yLi45b-Ovf2hn {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+      body {
+        top: 0px !important;
+        position: static !important;
+      }
+      .goog-text-highlight {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+      body > .skiptranslate {
+        display: none !important;
+      }
+    </style>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,te,hi,ml,kn',
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+
+      // Lock document.title so the browser tab always stays as "Maiven Survey" in English
+      document.title = "Maiven Survey";
+      const titleObserver = new MutationObserver(function() {
+        if (document.title !== "Maiven Survey") {
+          document.title = "Maiven Survey";
+        }
+      });
+      document.addEventListener("DOMContentLoaded", function() {
+        var target = document.querySelector('title');
+        if (target) {
+          titleObserver.observe(target, { subtree: true, characterData: true, childList: true });
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="module" crossorigin src="/test-taker-flow-design/assets/index-BU4h3v2r.js"></script>
+    <link rel="stylesheet" crossorigin href="/test-taker-flow-design/assets/index-CCtr57cB.css">
   </head>
   <body>
+    <div id="google_translate_element" style="display: none;"></div>
     <div id="root"></div>
   </body>
 </html>
