@@ -87,13 +87,28 @@
   margin-bottom: 16px;
   flex-grow: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   position: relative;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: #c7c3df transparent;
 }
 
 .post-survey-questions-container::-webkit-scrollbar {
-  display: none;
+  width: 6px;
+}
+
+.post-survey-questions-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-survey-questions-container::-webkit-scrollbar-thumb {
+  background-color: #c7c3df;
+  border-radius: 4px;
+}
+
+.post-survey-questions-container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
 }
 
 
@@ -556,11 +571,14 @@
 @media (max-width: 768px) {
   .post-survey-card {
     height: auto;
-    min-height: 660px;
+    min-height: 520px;
+    max-height: calc(100vh - 70px);
   }
   .post-survey-questions-container {
-    padding: 20px;
-    overflow-y: visible;
+    padding: 18px 16px;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
   .post-survey-options-grid {
     grid-template-columns: repeat(2, 1fr);
