@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LanguageSelector from './components/LanguageSelector';
 import OnboardingForm from './components/OnboardingForm';
 import InfoCard from './components/InfoCard';
 import EnvironmentScreen from './components/EnvironmentScreen';
@@ -13,6 +14,12 @@ export default function App() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(null);
   const [surveyData, setSurveyData] = useState(null);
+  const [language, setLanguage] = useState(() => localStorage.getItem('app_language') || 'en');
+
+  const handleLanguageChange = (newLang) => {
+    setLanguage(newLang);
+    localStorage.setItem('app_language', newLang);
+  };
 
 
 
@@ -54,6 +61,10 @@ export default function App() {
 
   return (
     <div className="page-container">
+      <LanguageSelector 
+        currentLanguage={language} 
+        onLanguageChange={handleLanguageChange} 
+      />
       {step === 1 && (
         <div className="onboarding-card">
           <OnboardingForm onSubmit={handleFormSubmit} />

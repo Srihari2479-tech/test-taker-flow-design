@@ -1,0 +1,222 @@
+.language-selector-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 1000;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.language-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(234, 232, 242, 0.9);
+  padding: 8px 16px;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(31, 26, 58, 0.08);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1f1a3a;
+  outline: none;
+  user-select: none;
+}
+
+.language-selector-btn:hover {
+  background: #ffffff;
+  border-color: #6b46f2;
+  box-shadow: 0 6px 20px rgba(107, 70, 242, 0.15);
+  transform: translateY(-1px);
+}
+
+.language-selector-btn.active {
+  background: #ffffff;
+  border-color: #6b46f2;
+  box-shadow: 0 0 0 4px rgba(107, 70, 242, 0.15);
+}
+
+.lang-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b46f2;
+}
+
+.lang-current-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang-native-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f1a3a;
+  letter-spacing: -0.2px;
+}
+
+.lang-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c6a84;
+  transition: transform 0.25s ease;
+}
+
+.lang-chevron.open {
+  transform: rotate(180deg);
+  color: #6b46f2;
+}
+
+.language-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 210px;
+  background: #ffffff;
+  border: 1px solid #eae8f2;
+  border-radius: 18px;
+  box-shadow: 0 16px 36px -8px rgba(31, 26, 58, 0.16);
+  padding: 8px 0;
+  animation: langDropdownSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1001;
+  overflow: hidden;
+}
+
+.language-dropdown-header {
+  padding: 8px 16px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #8e8b9e;
+  border-bottom: 1px solid #f2effa;
+  margin-bottom: 4px;
+}
+
+.language-dropdown-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.language-option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  outline: none;
+  font-family: inherit;
+}
+
+.language-option-item:hover {
+  background-color: #f5f3ff;
+}
+
+.language-option-item.selected {
+  background-color: #f1edfd;
+}
+
+.lang-option-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-option-native {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f1a3a;
+}
+
+.language-option-item.selected .lang-option-native {
+  color: #6b46f2;
+}
+
+.lang-option-english {
+  font-size: 12px;
+  color: #6c6a84;
+  font-weight: 400;
+}
+
+.lang-check-icon {
+  color: #6b46f2;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes langDropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hide default Google Translate widgets, floating icons, tooltips, and popups */
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-spinner-pos,
+.goog-te-gadget,
+.goog-te-gadget-icon,
+[class*="VIpgJd"],
+div[class*="VIpgJd"],
+iframe[class*="VIpgJd"],
+.VIpgJd-ZGain-eSvi3e,
+.VIpgJd-yLi45b-r4n8fl,
+.VIpgJd-yLi45b-Ovf2hn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Responsive considerations */
+@media (max-width: 576px) {
+  .language-selector-wrapper {
+    top: 12px;
+    right: 12px;
+  }
+
+  .language-selector-btn {
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  .lang-native-text {
+    font-size: 13px;
+  }
+
+  .language-dropdown-menu {
+    width: 190px;
+    right: 0;
+  }
+}

@@ -7,7 +7,8 @@
   padding: 32px 40px;
   display: flex;
   flex-direction: column;
-  height: 640px;
+  min-height: 640px;
+  max-height: 92vh;
   box-sizing: border-box;
 }
 
@@ -33,16 +34,21 @@
 }
 
 .survey-top-section h1 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 600;
   color: var(--color-text-main);
   letter-spacing: -0.8px;
   margin-bottom: 8px;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .survey-top-section .subtitle {
   font-size: 16px;
   color: var(--color-text-muted);
+  line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 .survey-illustration-wrapper {
@@ -84,7 +90,7 @@
 
 .question-header-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 }
 
@@ -100,6 +106,7 @@
   font-size: 13px;
   font-weight: 600;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .question-header-row h3 {
@@ -107,6 +114,9 @@
   font-weight: 600;
   color: var(--color-text-main);
   margin: 0;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .question-sub-instruction {
@@ -114,18 +124,19 @@
   color: var(--color-text-muted);
   margin-top: -8px;
   margin-left: 36px;
+  overflow-wrap: break-word;
 }
 
 .brand-options-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
   width: 100%;
 }
 
 .grid-2col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
   width: 100%;
 }
@@ -134,7 +145,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
+  padding: 12px 16px;
+  min-height: 48px;
+  height: auto;
   background-color: #ffffff;
   border: 1px solid var(--color-border);
   border-radius: 12px;
@@ -216,6 +229,9 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-main);
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .brand-option-card.selected .brand-name {
