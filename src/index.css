@@ -1,0 +1,71 @@
+/* Global Style Sheet for Campaign Testing Flow */
+
+:root {
+  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-primary: #6b46f2;
+  --color-primary-hover: #5935d9;
+  --color-primary-light: #f1edfd;
+  --color-primary-focus: rgba(107, 70, 242, 0.15);
+  --color-card-bg: #ffffff;
+  --color-bg-page: #f5f4fb;
+  --color-border: #eae8f2;
+  --color-border-hover: #c7c3df;
+  --color-text-main: #1f1a3a;
+  --color-text-muted: #6c6a84;
+  --color-text-light: #8e8b9e;
+  --color-text-placeholder: #a5a2b8;
+  --shadow-card: 0 20px 40px -15px rgba(31, 26, 58, 0.07);
+}
+
+/* Base Reset & DRY Utilities */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout overrides for Pre-Survey and Post-Survey screens */
+body:has(.survey-card),
+body:has(.post-survey-card) {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+body:has(.survey-card) #root,
+body:has(.post-survey-card) #root {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Global Utility Classes (Zero Inline Styles) */
+.audio-hidden,
+.element-hidden {
+  display: none !important;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

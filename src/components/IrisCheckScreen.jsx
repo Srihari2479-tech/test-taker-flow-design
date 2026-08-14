@@ -1,50 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../iris_check_screen.css';
 
+const calibrationPoints = [
+  { x: 50, y: 50 }, // 1. Center
+  { x: 15, y: 15 }, // 2. Top-Left
+  { x: 85, y: 15 }, // 3. Top-Right
+  { x: 85, y: 85 }, // 4. Bottom-Right
+  { x: 15, y: 85 }, // 5. Bottom-Left
+  { x: 50, y: 15 }, // 6. Top-Center
+  { x: 85, y: 50 }, // 7. Right-Center
+  { x: 50, y: 85 }, // 8. Bottom-Center
+  { x: 15, y: 50 }, // 9. Left-Center
+  { x: 30, y: 30 }, // 10. Inner Top-Left
+  { x: 70, y: 30 }, // 11. Inner Top-Right
+  { x: 50, y: 50 }, // 12. Final Center
+];
+
 const motivationTexts = {
-  12: "Focus on the first point to begin...",
-  11: "Great start, keep following the numbers.",
-  10: "Perfect alignment, stay steady!",
-  9: "You're doing fantastic.",
-  8: "Tracking eyes... looks good.",
-  7: "Maintain focus on the center of the circle.",
-  6: "Keep going, halfway through!",
-  5: "Excellent eye tracking quality.",
-  4: "Calibrating peripheral gaze...",
-  3: "Just a few more clicks...",
-  2: "Almost done, one more to go!",
-  1: "Click to complete calibration!"
+  12: "Focus on the number 12",
+  11: "Great job! Keep going",
+  10: "Follow the dot",
+  9: "You're doing fantastic",
+  8: "Almost halfway there",
+  7: "Stay focused",
+  6: "Halfway done!",
+  5: "Keep your eyes on the target",
+  4: "Only a few more left",
+  3: "Nearly complete!",
+  2: "Just two more!",
+  1: "Final point!",
 };
 
 export default function IrisCheckScreen({ onComplete }) {
-  const [currentNumber, setCurrentNumber] = useState(12);
-  const [dotPosition, setDotPosition] = useState({ x: 50, y: 50 });
+  const [stepIndex, setStepIndex] = useState(0);
   const containerRef = useRef(null);
 
-  
-  const generateRandomPosition = () => {
-    const minX = 10;
-    const maxX = 90;
-    const minY = 15;
-    const maxY = 80;
-    
-    const x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-    const y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-    
-    return { x, y };
-  };
+  const currentNumber = 12 - stepIndex;
+  const dotPosition = calibrationPoints[stepIndex] || { x: 50, y: 50 };
 
-  useEffect(() => {
-    
-    setDotPosition(generateRandomPosition());
-  }, []);
-
-  const handleDotClick = (e) => {
-    e.stopPropagation();
-    
-    if (currentNumber > 1) {
-      setCurrentNumber((prev) => prev - 1);
-      setDotPosition(generateRandomPosition());
+  const handleDotClick = () => {
+    if (stepIndex < calibrationPoints.length - 1) {
+      setStepIndex((prev) => prev + 1);
     } else {
       onComplete();
     }
@@ -62,8 +58,8 @@ export default function IrisCheckScreen({ onComplete }) {
         <div
           className="iris-calibration-dot"
           style={{
-            top: `${dotPosition.y}%`,
-            left: `${dotPosition.x}%`
+            '--dot-y': `${dotPosition.y}%`,
+            '--dot-x': `${dotPosition.x}%`
           }}
           onClick={handleDotClick}
         >
@@ -77,7 +73,7 @@ export default function IrisCheckScreen({ onComplete }) {
           <div className="iris-progress-track">
             <div 
               className="iris-progress-fill" 
-              style={{ width: `${progressPercent}%` }} 
+              style={{ '--progress-percent': `${progressPercent}%` }} 
             />
           </div>
         </div>

@@ -54,12 +54,6 @@ export default function CalibrationScreen({ onComplete }) {
   };
 
   const handleStartCalibration = () => {
-    const el = document.documentElement;
-    if (el.requestFullscreen) {
-      el.requestFullscreen().catch(() => {});
-    } else if (el.webkitRequestFullscreen) {
-      el.webkitRequestFullscreen();
-    }
     onComplete();
   };
 

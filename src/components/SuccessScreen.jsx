@@ -23,7 +23,7 @@ export default function SuccessScreen({ onRestart }) {
     <div className="success-screen-wrapper">
       <div className="success-card-container">
         <div className="success-animation-container">
-          <div ref={containerRef} style={{ width: 140, height: 140 }} />
+          <div ref={containerRef} className="success-lottie-box" />
         </div>
         <h1 className="success-title">Session completed successfully.</h1>
         <p className="success-subtitle">

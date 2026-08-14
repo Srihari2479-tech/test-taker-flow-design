@@ -2,15 +2,16 @@
 
 .post-survey-card {
   background: var(--color-card-bg);
-  border-radius: 32px;
+  border-radius: 28px;
   box-shadow: var(--shadow-card);
-  width: 100%;
-  max-width: 1210px;
-  padding: 32px 40px;
+  width: calc(100vw - 192px) !important;
+  max-width: calc(100vw - 192px) !important;
+  height: calc(100vh - 96px) !important;
+  max-height: calc(100vh - 96px) !important;
+  margin: 48px 96px !important;
+  padding: 28px 36px;
   display: flex;
   flex-direction: column;
-  min-height: 660px;
-  max-height: 92vh;
   box-sizing: border-box;
   position: relative;
   font-family: var(--font-family);
@@ -183,38 +184,69 @@
 
 .post-survey-options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
 }
 
 .post-survey-option-card {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 12px;
   padding: 12px 16px;
-  min-height: 48px;
-  height: auto;
+  min-height: 70px;
   background-color: #ffffff;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
 }
 
 .post-survey-option-card:hover {
   border-color: var(--color-border-hover);
   background-color: #faf9fd;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(31, 26, 58, 0.06);
 }
 
 .post-survey-option-card.selected {
   border-color: var(--color-primary);
   background-color: var(--color-primary-light);
+  box-shadow: 0 0 0 2px var(--color-primary);
 }
 
 .post-survey-option-card.selected .brand-name {
   color: var(--color-primary);
+}
+
+.post-survey-option-card .option-image-wrapper {
+  width: 68px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.post-survey-option-card .option-card-img {
+  width: 100%;
+  height: 100%;
+  max-width: 68px;
+  max-height: 48px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.05));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.post-survey-option-card:hover .option-card-img {
+  transform: scale(1.1);
 }
 
 
@@ -345,23 +377,20 @@
 }
 
 
-.ps-stars-row-container {
+.stars-rating-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
-  max-width: 240px;
+  gap: 10px;
   margin-left: 24px;
   margin-top: 4px;
-  margin-bottom: 12px;
-  gap: 8px;
 }
 
 .ps-stars-row {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .ps-star-btn {
@@ -373,20 +402,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  color: var(--color-text-placeholder);
+  color: #d1cbe5;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .ps-star-btn:hover {
-  transform: scale(1.25);
+  transform: scale(1.12);
 }
 
 .ps-star-btn:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
+}
+
+.ps-star-svg {
+  width: 32px;
+  height: 32px;
+  transition: color 0.15s ease, fill 0.15s ease;
 }
 
 .ps-star-btn.active {
-  color: var(--color-primary);
+  color: #6b46f2;
+}
+
+.ps-star-btn.active .ps-star-svg {
+  animation: starPop 0.2s ease;
 }
 
 .ps-star-svg {

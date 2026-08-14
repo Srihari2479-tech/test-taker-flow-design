@@ -54,6 +54,47 @@ body:has(.sv-intro-screen) .page-container {
   animation: svFadeUp 0.7s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.sv-intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.sv-play-blue-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #4b8cc1;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(75, 140, 193, 0.45);
+  margin: 0 auto;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.sv-play-blue-btn:hover {
+  transform: scale(1.12);
+  background: #3c7ab0;
+  box-shadow: 0 8px 30px rgba(75, 140, 193, 0.6);
+}
+
+.sv-play-blue-btn:active {
+  transform: scale(0.96);
+}
+
+.sv-play-blue-btn svg {
+  margin-left: 3px;
+}
+
 
 .sv-lottie-btn {
   background: none;

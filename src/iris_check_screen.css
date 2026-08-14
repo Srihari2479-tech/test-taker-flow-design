@@ -112,6 +112,8 @@ body:has(.iris-fullscreen-container) .page-container {
 
 .iris-calibration-dot {
   position: absolute;
+  top: var(--dot-y, 50%);
+  left: var(--dot-x, 50%);
   width: 44px;
   height: 44px;
   background-color: #3A0FEE;
@@ -188,6 +190,7 @@ body:has(.iris-fullscreen-container) .page-container {
 
 .iris-progress-fill {
   height: 100%;
+  width: var(--progress-percent, 0%);
   background: linear-gradient(90deg, #58a5ff 0%, #9a75fe 100%);
   border-radius: 100px;
   box-shadow: 0 0 10px rgba(154, 117, 254, 0.5);

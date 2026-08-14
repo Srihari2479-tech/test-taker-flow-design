@@ -1,8 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import maivenLogo from '../assets/maiven_logo.png';
 import surveyImage from '../assets/survey_image.png';
+import cocaColaImg from '../assets/coco_cola.png';
+import fantaImg from '../assets/Fanta.png';
+import iphoneImg from '../assets/iphone.png';
+import motorolaImg from '../assets/motorola.png';
+import oneplusImg from '../assets/oneplus.png';
+import pepsiImg from '../assets/pepsi.png';
+import redmiImg from '../assets/redmi.png';
+import samsungImg from '../assets/samsung.png';
+import spriteImg from '../assets/sprite.png';
+import thumsupImg from '../assets/thumsup.png';
+import zebronicsImg from '../assets/zebronics.png';
+import notSureImg from '../assets/not sure.png';
+import othersImg from '../assets/others.png';
+import sonyImg from '../assets/sony.png';
+import jblHeadphoneImg from '../assets/JBL.png';
+import boseImg from '../assets/BOSE.png';
+import appleHeadphoneImg from '../assets/apple_headphone.png';
+import sennheiserImg from '../assets/sennheiser.png';
+import boatHeadphoneImg from '../assets/boat_headphone.png';
 import '../postsurvey_screen.css';
-
 
 const StarIcon = ({ active }) => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ps-star-svg">
@@ -62,8 +80,28 @@ const ListeningAnimation = () => (
 
 const SpeechRecognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null;
 
+// Map local collected assets for post survey options
+const OPTION_IMAGES = {
+  'Sony': sonyImg,
+  'JBL': jblHeadphoneImg,
+  'Bose': boseImg,
+  'Sennheiser': sennheiserImg,
+  'Apple': appleHeadphoneImg,
+  'boAt': boatHeadphoneImg,
+  'Zebronics': zebronicsImg,
+  'Coca-Cola': cocaColaImg,
+  'Pepsi': pepsiImg,
+  'Sprite': spriteImg,
+  'Fanta': fantaImg,
+  'Thums Up': thumsupImg,
+  'Limca': spriteImg,
+  'Mountain Dew': spriteImg,
+  '7Up': spriteImg,
+  'Other': othersImg,
+  'Not sure': notSureImg
+};
+
 export default function PostSurveyScreen({ onSubmit }) {
-  
   const [selectedHeadphone, setSelectedHeadphone] = useState('');
   const [selectedSoftDrinks, setSelectedSoftDrinks] = useState([]);
   const [adDetail, setAdDetail] = useState('');
@@ -74,11 +112,9 @@ export default function PostSurveyScreen({ onSubmit }) {
   const [isNewRating, setIsNewRating] = useState(0);
   const [considerRating, setConsiderRating] = useState(0);
 
-  
   const [hoveredNewRating, setHoveredNewRating] = useState(null);
   const [hoveredConsiderRating, setHoveredConsiderRating] = useState(null);
 
-  
   const [activeRecorderField, setActiveRecorderField] = useState(null);
   const [voiceStates, setVoiceStates] = useState({
     adDetail: { state: 'idle', url: null },
@@ -94,7 +130,6 @@ export default function PostSurveyScreen({ onSubmit }) {
   const audioPlayerRef = useRef(null);
   const containerRef = useRef(null);
 
-  
   const q1Ref = useRef(null);
   const q2Ref = useRef(null);
   const q3Ref = useRef(null);
@@ -105,26 +140,10 @@ export default function PostSurveyScreen({ onSubmit }) {
   const q8Ref = useRef(null);
   const q9Ref = useRef(null);
 
-  const headphoneBrands = [
-    'boAt Rockerz 425', 'Portronics Muffs M3',
-    'Noise Two', 'JBL Blue Tune 520',
-    'Zebronics Duke Pro', 'Other', 'Not sure'
-  ];
 
-  const softDrinkBrands = [
-    'Coca-Cola', 'Pepsi', 'Sprite',
-    'Fanta', 'Thumbs Up', 'Other'
-  ];
 
-  
-  useEffect(() => {
-    return () => {
-      stopRecording();
-      if (audioPlayerRef.current) {
-        audioPlayerRef.current.pause();
-      }
-    };
-  }, []);
+  const headphoneBrands = ['Sony', 'JBL', 'Bose', 'Apple', 'Sennheiser', 'boAt', 'Other', 'Not sure'];
+  const softDrinkBrands = ['Coca-Cola', 'Pepsi', 'Sprite', 'Fanta', 'Thums Up', 'Limca', 'Mountain Dew', '7Up', 'Other', 'Not sure'];
 
   const scrollToQuestion = (qRef) => {
     if (qRef.current) {
@@ -145,45 +164,22 @@ export default function PostSurveyScreen({ onSubmit }) {
     }
   };
 
-  const handleSoftDrinkToggle = (drink) => {
-    let newDrinks;
-    if (selectedSoftDrinks.includes(drink)) {
-      newDrinks = selectedSoftDrinks.filter(item => item !== drink);
-    } else {
-      newDrinks = [...selectedSoftDrinks, drink];
-    }
-    setSelectedSoftDrinks(newDrinks);
-    
-    
-    if (newDrinks.length >= 2) {
-      setTimeout(() => {
-        scrollToQuestion(q3Ref);
-      }, 300);
-    }
-  };
-
-  const handleHeadphoneSelect = (brand) => {
-    setSelectedHeadphone(brand);
-    
-    setTimeout(() => {
-      scrollToQuestion(q2Ref);
-    }, 200);
-  };
-
-  
-  const startRecording = async (fieldName, setter) => {
-    if (activeRecorderField) {
-      stopRecording();
-    }
-
+  const startRecording = async (fieldName, setFieldText) => {
     try {
+      if (activeRecorderField && activeRecorderField !== fieldName) {
+        stopRecording();
+      }
+
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       audioChunksRef.current = [];
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
+      setActiveRecorderField(fieldName);
 
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
       };
 
       mediaRecorder.onstop = () => {
@@ -191,13 +187,12 @@ export default function PostSurveyScreen({ onSubmit }) {
         const url = URL.createObjectURL(audioBlob);
         setVoiceStates(prev => ({
           ...prev,
-          [fieldName]: { ...prev[fieldName], url }
+          [fieldName]: { state: 'hasAudio', url }
         }));
         stream.getTracks().forEach(track => track.stop());
       };
 
       mediaRecorder.start();
-      setActiveRecorderField(fieldName);
       setVoiceStates(prev => ({
         ...prev,
         [fieldName]: { state: 'listening', url: null }
@@ -206,68 +201,75 @@ export default function PostSurveyScreen({ onSubmit }) {
       if (SpeechRecognition) {
         const recognition = new SpeechRecognition();
         recognitionRef.current = recognition;
-        recognition.continuous = false;
-        recognition.interimResults = false;
+        recognition.continuous = true;
+        recognition.interimResults = true;
         recognition.lang = 'en-IN';
-        
+
         recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          setter(transcript);
+          let transcript = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          if (transcript) {
+            setFieldText(transcript);
+          }
         };
-        recognition.onerror = (e) => console.error("Speech Recognition error", e);
+
+        recognition.onerror = (event) => {
+          console.log('Speech recognition error:', event.error);
+        };
+
         recognition.start();
       }
     } catch (err) {
-      console.error("Microphone access failed", err);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
-    }
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-    if (activeRecorderField) {
-      const field = activeRecorderField;
+      console.log('Microphone error:', err);
+      alert('Could not access microphone. Please check permissions.');
       setVoiceStates(prev => ({
         ...prev,
-        [field]: { ...prev[field], state: 'loading' }
+        [fieldName]: { state: 'idle', url: null }
       }));
-      setTimeout(() => {
-        setVoiceStates(prev => ({
-          ...prev,
-          [field]: { ...prev[field], state: 'hasAudio' }
-        }));
-      }, 1500);
       setActiveRecorderField(null);
     }
   };
 
-  const togglePlayAudio = (fieldName) => {
-    const audioState = voiceStates[fieldName];
-    if (!audioState.url) return;
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
+    }
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {}
+    }
+    const currentField = activeRecorderField;
+    if (currentField) {
+      setVoiceStates(prev => ({
+        ...prev,
+        [currentField]: { ...prev[currentField], state: 'loading' }
+      }));
+      setTimeout(() => {
+        setVoiceStates(prev => ({
+          ...prev,
+          [currentField]: { ...prev[currentField], state: 'hasAudio' }
+        }));
+      }, 1200);
+    }
+    setActiveRecorderField(null);
+  };
 
-    if (audioState.state === 'playing') {
+  const togglePlayAudio = (fieldName) => {
+    const fieldObj = voiceStates[fieldName];
+    if (!fieldObj.url || !audioPlayerRef.current) return;
+
+    if (fieldObj.state === 'playing') {
       audioPlayerRef.current.pause();
       setVoiceStates(prev => ({
         ...prev,
         [fieldName]: { ...prev[fieldName], state: 'hasAudio' }
       }));
     } else {
-      if (audioPlayerRef.current) audioPlayerRef.current.pause();
-      
-      setVoiceStates(prev => {
-        const updated = { ...prev };
-        Object.keys(updated).forEach(k => {
-          if (updated[k].state === 'playing') updated[k].state = 'hasAudio';
-        });
-        updated[fieldName].state = 'playing';
-        return updated;
-      });
-
-      audioPlayerRef.current.src = audioState.url;
+      audioPlayerRef.current.src = fieldObj.url;
+      audioPlayerRef.current.currentTime = 0;
       audioPlayerRef.current.play();
       audioPlayerRef.current.onended = () => {
         setVoiceStates(prev => ({
@@ -275,48 +277,53 @@ export default function PostSurveyScreen({ onSubmit }) {
           [fieldName]: { ...prev[fieldName], state: 'hasAudio' }
         }));
       };
+      setVoiceStates(prev => ({
+        ...prev,
+        [fieldName]: { ...prev[fieldName], state: 'playing' }
+      }));
     }
   };
 
-  const deleteAudio = (fieldName, setter) => {
-    if (audioPlayerRef.current && voiceStates[fieldName].state === 'playing') {
+  const deleteAudio = (fieldName, setFieldText) => {
+    if (voiceStates[fieldName].state === 'playing' && audioPlayerRef.current) {
       audioPlayerRef.current.pause();
-      audioPlayerRef.current.src = '';
     }
-    setter('');
     setVoiceStates(prev => ({
       ...prev,
       [fieldName]: { state: 'idle', url: null }
     }));
+    setFieldText('');
+  };
+
+  const handleHeadphoneSelect = (hp) => {
+    setSelectedHeadphone(hp);
+    setTimeout(() => scrollToQuestion(q2Ref), 200);
+  };
+
+  const handleSoftDrinkToggle = (sd) => {
+    if (selectedSoftDrinks.includes(sd)) {
+      setSelectedSoftDrinks(selectedSoftDrinks.filter(item => item !== sd));
+    } else {
+      setSelectedSoftDrinks([...selectedSoftDrinks, sd]);
+    }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (isAllAnswered && onSubmit) {
-      onSubmit({
-        postHeadphone: selectedHeadphone,
-        postSoftDrinks: selectedSoftDrinks,
-        adDetail,
-        firstRemember,
-        adFeeling,
-        adBrand,
-        adMessage,
-        isNewRating,
-        considerRating
-      });
-    }
+    onSubmit({
+      selectedHeadphone,
+      selectedSoftDrinks,
+      adDetail,
+      firstRemember,
+      adFeeling,
+      adBrand,
+      adMessage,
+      isNewRating,
+      considerRating
+    });
   };
 
-  const isAllAnswered = 
-    selectedHeadphone && 
-    selectedSoftDrinks.length >= 1 && 
-    adDetail.trim() !== '' && 
-    firstRemember.trim() !== '' && 
-    adFeeling.trim() !== '' && 
-    adBrand.trim() !== '' && 
-    adMessage.trim() !== '' && 
-    isNewRating > 0 && 
-    considerRating > 0;
+  const isFormValid = selectedHeadphone !== '' && selectedSoftDrinks.length >= 1;
 
   return (
     <div className="post-survey-card animate-fade-in">
@@ -337,12 +344,7 @@ export default function PostSurveyScreen({ onSubmit }) {
       <form onSubmit={handleFormSubmit}>
         <div className="post-survey-questions-container" ref={containerRef}>
           
-          {}
-          <div className="post-survey-section-header">
-            <span className="post-survey-section-title">Category</span>
-          </div>
-
-          {}
+          {/* Question 1 */}
           <div className="post-survey-question-block" ref={q1Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">1)</span>
@@ -358,13 +360,20 @@ export default function PostSurveyScreen({ onSubmit }) {
                   <div className="ps-radio-outer">
                     <div className="ps-radio-inner" />
                   </div>
+                  <div className="option-image-wrapper">
+                    <img 
+                      src={OPTION_IMAGES[hp] || OPTION_IMAGES['Other']} 
+                      alt={hp} 
+                      className="option-card-img" 
+                    />
+                  </div>
                   <span className="brand-name">{hp}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {}
+          {/* Question 2 */}
           <div className="post-survey-question-block" ref={q2Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">2)</span>
@@ -381,18 +390,20 @@ export default function PostSurveyScreen({ onSubmit }) {
                   <div className="ps-checkbox-outer">
                     <CheckIcon />
                   </div>
+                  <div className="option-image-wrapper">
+                    <img 
+                      src={OPTION_IMAGES[sd] || OPTION_IMAGES['Other']} 
+                      alt={sd} 
+                      className="option-card-img" 
+                    />
+                  </div>
                   <span className="brand-name">{sd}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {}
-          <div className="post-survey-section-header">
-            <span className="post-survey-section-title">Ad Viewing</span>
-          </div>
-
-          {}
+          {/* Question 3 */}
           <div className="post-survey-question-block" ref={q3Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">3)</span>
@@ -450,13 +461,13 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-          {}
+          {/* Question 4 */}
           <div className="post-survey-question-block" ref={q4Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">4)</span>
-              <span className="post-survey-question-text">What Is The First Thing You Remember About This Ad?</span>
+              <span className="post-survey-question-text">What Is The First Thing That You Remember Seeing In The Ad?</span>
             </div>
-            <div className="ps-input-wrapper align-center">
+            <div className="ps-input-wrapper">
               {voiceStates.firstRemember.state === 'loading' ? (
                 <div className="voice-loading-group">
                   <div className="voice-loader-wrapper">
@@ -485,9 +496,8 @@ export default function PostSurveyScreen({ onSubmit }) {
                       </button>
                     )}
                   </div>
-                  <input
-                    type="text"
-                    className="ps-text-field"
+                  <textarea
+                    className="ps-textarea-field"
                     placeholder="Enter your answer here..."
                     value={firstRemember}
                     onChange={(e) => setFirstRemember(e.target.value)}
@@ -509,11 +519,11 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-          {}
+          {/* Question 5 */}
           <div className="post-survey-question-block" ref={q5Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">5)</span>
-              <span className="post-survey-question-text">What Is The Ad Saying And How Does It Make You Feel?</span>
+              <span className="post-survey-question-text">How Did The Ad Make You Feel?</span>
             </div>
             <div className="ps-input-wrapper">
               {voiceStates.adFeeling.state === 'loading' ? (
@@ -567,16 +577,11 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-          {}
-          <div className="post-survey-section-header">
-            <span className="post-survey-section-title">Diagnostic Questions</span>
-          </div>
-
-          {}
+          {/* Question 6 */}
           <div className="post-survey-question-block" ref={q6Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">6)</span>
-              <span className="post-survey-question-text">Which Brand Was This Advertisement For?</span>
+              <span className="post-survey-question-text">Which Brand Was Being Advertised In The Video?</span>
             </div>
             <div className="ps-input-wrapper">
               {voiceStates.adBrand.state === 'loading' ? (
@@ -609,7 +614,7 @@ export default function PostSurveyScreen({ onSubmit }) {
                   </div>
                   <textarea
                     className="ps-textarea-field"
-                    placeholder="Enter your answer here..."
+                    placeholder="Enter brand name here..."
                     value={adBrand}
                     onChange={(e) => setAdBrand(e.target.value)}
                     onFocus={() => {
@@ -630,13 +635,13 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-          {}
+          {/* Question 7 */}
           <div className="post-survey-question-block" ref={q7Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">7)</span>
-              <span className="post-survey-question-text">What Was The Main Message Of This Ad?</span>
+              <span className="post-survey-question-text">What Was The Main Message Of The Ad?</span>
             </div>
-            <div className="ps-input-wrapper align-center">
+            <div className="ps-input-wrapper">
               {voiceStates.adMessage.state === 'loading' ? (
                 <div className="voice-loading-group">
                   <div className="voice-loader-wrapper">
@@ -665,10 +670,9 @@ export default function PostSurveyScreen({ onSubmit }) {
                       </button>
                     )}
                   </div>
-                  <input
-                    type="text"
-                    className="ps-text-field"
-                    placeholder="Enter your answer here..."
+                  <textarea
+                    className="ps-textarea-field"
+                    placeholder="Enter main message here..."
                     value={adMessage}
                     onChange={(e) => setAdMessage(e.target.value)}
                     onFocus={() => {
@@ -689,62 +693,56 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-          {}
+          {/* Question 8 */}
           <div className="post-survey-question-block" ref={q8Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">8)</span>
-              <span className="post-survey-question-text">Is The Ad Saying Anything New? Why?</span>
+              <span className="post-survey-question-text">How New Or Different Was The Ad From What You Have Usually Seen?</span>
             </div>
-            <p className="post-survey-question-instruction">Please rate your experience.</p>
-            <div className="ps-stars-row-container">
-              <div className="ps-stars-row" onMouseLeave={() => setHoveredNewRating(null)}>
-                {[1, 2, 3, 4, 5].map(rating => {
-                  const active = hoveredNewRating !== null ? rating <= hoveredNewRating : rating <= isNewRating;
-                  return (
-                    <button
-                      key={rating}
-                      type="button"
-                      className={`ps-star-btn ${active ? 'active' : ''}`}
-                      onClick={() => {
-                        setIsNewRating(rating);
-                        setTimeout(() => {
-                          scrollToQuestion(q9Ref);
-                        }, 250);
-                      }}
-                      onMouseEnter={() => setHoveredNewRating(rating)}
-                    >
-                      <StarIcon active={active} />
-                    </button>
-                  );
-                })}
-              </div>
+            <p className="post-survey-question-instruction">Rate from 1 (Not at all new) to 5 (Very new).</p>
+            <div className="ps-stars-row" onMouseLeave={() => setHoveredNewRating(null)}>
+              {[1, 2, 3, 4, 5].map((rating) => {
+                const active = hoveredNewRating !== null ? rating <= hoveredNewRating : rating <= isNewRating;
+                return (
+                  <button
+                    key={rating}
+                    type="button"
+                    className={`ps-star-btn ${active ? 'active' : ''}`}
+                    onClick={() => {
+                      setIsNewRating(rating);
+                      setTimeout(() => scrollToQuestion(q9Ref), 200);
+                    }}
+                    onMouseEnter={() => setHoveredNewRating(rating)}
+                  >
+                    <StarIcon active={active} />
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {}
+          {/* Question 9 */}
           <div className="post-survey-question-block" ref={q9Ref}>
             <div className="post-survey-question-header">
               <span className="post-survey-question-num">9)</span>
-              <span className="post-survey-question-text">After Watching This Ad, How Likely Are You To Consider This Brand?</span>
+              <span className="post-survey-question-text">How Likely Are You To Consider Buying The Brand Advertised?</span>
             </div>
-            <p className="post-survey-question-instruction">Please rate your experience.</p>
-            <div className="ps-stars-row-container">
-              <div className="ps-stars-row" onMouseLeave={() => setHoveredConsiderRating(null)}>
-                {[1, 2, 3, 4, 5].map(rating => {
-                  const active = hoveredConsiderRating !== null ? rating <= hoveredConsiderRating : rating <= considerRating;
-                  return (
-                    <button
-                      key={rating}
-                      type="button"
-                      className={`ps-star-btn ${active ? 'active' : ''}`}
-                      onClick={() => setConsiderRating(rating)}
-                      onMouseEnter={() => setHoveredConsiderRating(rating)}
-                    >
-                      <StarIcon active={active} />
-                    </button>
-                  );
-                })}
-              </div>
+            <p className="post-survey-question-instruction">Rate from 1 (Not at all likely) to 5 (Extremely likely).</p>
+            <div className="ps-stars-row" onMouseLeave={() => setHoveredConsiderRating(null)}>
+              {[1, 2, 3, 4, 5].map((rating) => {
+                const active = hoveredConsiderRating !== null ? rating <= hoveredConsiderRating : rating <= considerRating;
+                return (
+                  <button
+                    key={rating}
+                    type="button"
+                    className={`ps-star-btn ${active ? 'active' : ''}`}
+                    onClick={() => setConsiderRating(rating)}
+                    onMouseEnter={() => setHoveredConsiderRating(rating)}
+                  >
+                    <StarIcon active={active} />
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -753,15 +751,15 @@ export default function PostSurveyScreen({ onSubmit }) {
         <div className="post-survey-actions">
           <button
             type="submit"
-            className={`post-survey-submit-btn ${isAllAnswered ? 'dark-btn' : ''}`}
-            disabled={!isAllAnswered}
+            className={`post-survey-submit-btn ${isFormValid ? 'dark-btn' : ''}`}
+            disabled={!isFormValid}
           >
             <span>Submit</span>
             <ArrowRightIcon />
           </button>
         </div>
       </form>
-      <audio ref={audioPlayerRef} style={{ display: 'none' }} />
+      <audio ref={audioPlayerRef} className="audio-hidden" />
     </div>
   );
 }

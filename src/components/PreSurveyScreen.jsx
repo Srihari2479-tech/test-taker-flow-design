@@ -1,6 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 import maivenLogo from '../assets/maiven_logo.png';
 import surveyImage from '../assets/survey_image.png';
+import cocaColaImg from '../assets/coco_cola.png';
+import fantaImg from '../assets/Fanta.png';
+import iphoneImg from '../assets/iphone.png';
+import motorolaImg from '../assets/motorola.png';
+import oneplusImg from '../assets/oneplus.png';
+import pepsiImg from '../assets/pepsi.png';
+import redmiImg from '../assets/redmi.png';
+import samsungImg from '../assets/samsung.png';
+import spriteImg from '../assets/sprite.png';
+import thumsupImg from '../assets/thumsup.png';
+import zebronicsImg from '../assets/zebronics.png';
+import appleLogo from '../assets/APPLE.png';
+import samsungLogo from '../assets/SAMSUNGlogo.png';
+import xiaomiLogo from '../assets/XIAOMI.png';
+import oneplusLogo from '../assets/ONEPLUS copy.png';
+import notSureImg from '../assets/not sure.png';
+import othersImg from '../assets/others.png';
+import sonyImg from '../assets/sony.png';
+import jblHeadphoneImg from '../assets/JBL.png';
+import boseImg from '../assets/BOSE.png';
+import appleHeadphoneImg from '../assets/apple_headphone.png';
+import sennheiserImg from '../assets/sennheiser.png';
+import boatHeadphoneImg from '../assets/boat_headphone.png';
+import dellLpImg from '../assets/dell_lp.png';
+import lenovoLpImg from '../assets/lenovo_lp.png';
+import hpLpImg from '../assets/hp_lp.png';
+import appleLpImg from '../assets/apple_lp.png';
+import msiLpImg from '../assets/msi_lp.png';
+import asusLpImg from '../assets/asus_lp.png';
 import '../pre_survey.css';
 
 const StarIcon = ({ active }) => (
@@ -61,11 +90,44 @@ const ListeningAnimation = () => (
 
 const SpeechRecognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null;
 
+// Map local collected assets for options
+const OPTION_IMAGES = {
+  'Maiven': maivenLogo,
+  'Sony': sonyImg,
+  'JBL': jblHeadphoneImg,
+  'Bose': boseImg,
+  'Sennheiser': sennheiserImg,
+  'Apple': appleLogo,
+  'Samsung': samsungLogo,
+  'Xiaomi': xiaomiLogo,
+  'OnePlus': oneplusLogo,
+  'boAt': boatHeadphoneImg,
+  'Zebronics': zebronicsImg,
+  'Dell': dellLpImg,
+  'Lenovo': lenovoLpImg,
+  'HP': hpLpImg,
+  'MSI': msiLpImg,
+  'Asus': asusLpImg,
+  'iPhone': iphoneImg,
+  'Motorola': motorolaImg,
+  'Redmi': redmiImg,
+  'Coca-Cola': cocaColaImg,
+  'Pepsi': pepsiImg,
+  'Sprite': spriteImg,
+  'Fanta': fantaImg,
+  'Thums Up': thumsupImg,
+  'Limca': spriteImg,
+  'Mountain Dew': spriteImg,
+  '7Up': spriteImg,
+  'Other': othersImg,
+  'Not sure': notSureImg
+};
+
 export default function PreSurveyScreen({ onSubmit }) {
-  const [selectedBrand, setSelectedBrand] = useState('Maiven');
+  const [selectedBrand, setSelectedBrand] = useState('Apple');
   const [selectedRating, setSelectedRating] = useState(5);
   const [hoveredRating, setHoveredRating] = useState(null);
-  const [selectedHeadphone, setSelectedHeadphone] = useState('Noise Two');
+  const [selectedHeadphone, setSelectedHeadphone] = useState('Sony');
   const [selectedLaptops, setSelectedLaptops] = useState(['Lenovo']);
   const [audioPref, setAudioPref] = useState('');
   const [easeOfUse, setEaseOfUse] = useState('');
@@ -92,6 +154,10 @@ export default function PreSurveyScreen({ onSubmit }) {
   const q4Ref = useRef(null);
   const q5Ref = useRef(null);
   const q6Ref = useRef(null);
+
+  const containerRef = useRef(null);
+
+
 
   const scrollToQuestion = (qRef) => {
     if (qRef.current) {
@@ -133,60 +199,36 @@ export default function PreSurveyScreen({ onSubmit }) {
         stream.getTracks().forEach(track => track.stop());
       };
       mediaRecorder.start();
+      setVoiceState5('listening');
+
       if (SpeechRecognition) {
         const recognition = new SpeechRecognition();
         recognitionRef5.current = recognition;
-        recognition.continuous = false;
-        recognition.interimResults = false;
+        recognition.continuous = true;
+        recognition.interimResults = true;
         recognition.lang = lang5;
+
         recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          setAudioPref(transcript);
+          let transcript = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          if (transcript) {
+            setAudioPref(transcript);
+          }
         };
+
         recognition.onerror = (event) => {
-          console.error(event.error);
+          console.log('Speech recognition error 5:', event.error);
         };
+
         recognition.start();
       }
-      setVoiceState5('listening');
     } catch (err) {
-      console.error(err);
+      console.log('Error accessing microphone 5:', err);
+      alert('Could not access microphone. Please check permissions.');
+      setVoiceState5('idle');
     }
-  };
-
-  const stopRecording5 = () => {
-    if (mediaRecorderRef5.current && mediaRecorderRef5.current.state !== 'inactive') {
-      mediaRecorderRef5.current.stop();
-    }
-    if (recognitionRef5.current) {
-      recognitionRef5.current.stop();
-    }
-    setVoiceState5('loading');
-    setTimeout(() => {
-      setVoiceState5('hasAudio');
-    }, 1500);
-  };
-
-  const togglePlayAudio5 = () => {
-    if (audioRef5.current) {
-      if (voiceState5 === 'playing') {
-        audioRef5.current.pause();
-        setVoiceState5('hasAudio');
-      } else {
-        audioRef5.current.play();
-        setVoiceState5('playing');
-      }
-    }
-  };
-
-  const deleteAudio5 = () => {
-    if (audioRef5.current) {
-      audioRef5.current.pause();
-      audioRef5.current.src = '';
-    }
-    setAudioUrl5(null);
-    setAudioPref('');
-    setVoiceState5('idle');
   };
 
   const startRecording6 = async () => {
@@ -210,50 +252,100 @@ export default function PreSurveyScreen({ onSubmit }) {
         stream.getTracks().forEach(track => track.stop());
       };
       mediaRecorder.start();
+      setVoiceState6('listening');
+
       if (SpeechRecognition) {
         const recognition = new SpeechRecognition();
         recognitionRef6.current = recognition;
-        recognition.continuous = false;
-        recognition.interimResults = false;
+        recognition.continuous = true;
+        recognition.interimResults = true;
         recognition.lang = lang6;
+
         recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          setEaseOfUse(transcript);
+          let transcript = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+          }
+          if (transcript) {
+            setEaseOfUse(transcript);
+          }
         };
+
         recognition.onerror = (event) => {
-          console.error(event.error);
+          console.log('Speech recognition error 6:', event.error);
         };
+
         recognition.start();
       }
-      setVoiceState6('listening');
     } catch (err) {
-      console.error(err);
+      console.log('Error accessing microphone 6:', err);
+      alert('Could not access microphone. Please check permissions.');
+      setVoiceState6('idle');
     }
   };
 
+  const stopRecording5 = () => {
+    if (mediaRecorderRef5.current && mediaRecorderRef5.current.state === 'recording') {
+      mediaRecorderRef5.current.stop();
+    }
+    if (recognitionRef5.current) {
+      try {
+        recognitionRef5.current.stop();
+      } catch (e) {}
+    }
+    setVoiceState5('loading');
+    setTimeout(() => {
+      setVoiceState5('hasAudio');
+    }, 1200);
+  };
+
   const stopRecording6 = () => {
-    if (mediaRecorderRef6.current && mediaRecorderRef6.current.state !== 'inactive') {
+    if (mediaRecorderRef6.current && mediaRecorderRef6.current.state === 'recording') {
       mediaRecorderRef6.current.stop();
     }
     if (recognitionRef6.current) {
-      recognitionRef6.current.stop();
+      try {
+        recognitionRef6.current.stop();
+      } catch (e) {}
     }
     setVoiceState6('loading');
     setTimeout(() => {
       setVoiceState6('hasAudio');
-    }, 1500);
+    }, 1200);
+  };
+
+  const togglePlayAudio5 = () => {
+    if (!audioRef5.current) return;
+    if (voiceState5 === 'playing') {
+      audioRef5.current.pause();
+      setVoiceState5('hasAudio');
+    } else {
+      audioRef5.current.currentTime = 0;
+      audioRef5.current.play();
+      setVoiceState5('playing');
+    }
   };
 
   const togglePlayAudio6 = () => {
-    if (audioRef6.current) {
-      if (voiceState6 === 'playing') {
-        audioRef6.current.pause();
-        setVoiceState6('hasAudio');
-      } else {
-        audioRef6.current.play();
-        setVoiceState6('playing');
-      }
+    if (!audioRef6.current) return;
+    if (voiceState6 === 'playing') {
+      audioRef6.current.pause();
+      setVoiceState6('hasAudio');
+    } else {
+      audioRef6.current.currentTime = 0;
+      audioRef6.current.play();
+      setVoiceState6('playing');
     }
+  };
+
+  const deleteAudio5 = () => {
+    if (audioRef5.current) {
+      audioRef5.current.pause();
+      audioRef5.current.src = '';
+    }
+    setAudioUrl5(null);
+    setVoiceState5('idle');
+    setAudioPref('');
   };
 
   const deleteAudio6 = () => {
@@ -262,90 +354,45 @@ export default function PreSurveyScreen({ onSubmit }) {
       audioRef6.current.src = '';
     }
     setAudioUrl6(null);
-    setEaseOfUse('');
     setVoiceState6('idle');
+    setEaseOfUse('');
   };
-
-  const containerRef = useRef(null);
-  const [isAtBottom, setIsAtBottom] = useState(false);
-
-  const brands = ['Brand A', 'Brand B', 'Maiven', 'Other', 'Not sure'];
-  const ratings = [1, 2, 3, 4, 5];
-  const headphones = [
-    'boAt Rockerz 425', 'Portronics Muffs M3',
-    'Noise Two', 'JBL Blue Tune 520',
-    'Zebronics Duke Pro', 'Other'
-  ];
-  const laptops = ['Dell', 'HP', 'Lenovo', 'Asus', 'Acer', 'Other'];
-
-  const handleScroll = () => {
-    if (containerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-      if (scrollHeight - scrollTop - clientHeight < 40) {
-        setIsAtBottom(true);
-      } else {
-        setIsAtBottom(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    handleScroll();
-  }, []);
 
   const handleLaptopToggle = (laptop) => {
-    let newLaptops;
     if (selectedLaptops.includes(laptop)) {
-      newLaptops = selectedLaptops.filter(item => item !== laptop);
+      setSelectedLaptops(selectedLaptops.filter((l) => l !== laptop));
     } else {
-      newLaptops = [...selectedLaptops, laptop];
-    }
-    setSelectedLaptops(newLaptops);
-    if (newLaptops.length >= 2) {
-      setTimeout(() => scrollToQuestion(q5Ref), 300);
+      setSelectedLaptops([...selectedLaptops, laptop]);
     }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      brand: selectedBrand,
-      rating: selectedRating,
-      headphone: selectedHeadphone,
-      laptops: selectedLaptops,
+      selectedBrand,
+      selectedRating,
+      selectedHeadphone,
+      selectedLaptops,
       audioPref,
       easeOfUse
     });
   };
 
-  const isAllAnswered = 
-    selectedBrand && 
-    selectedRating && 
-    selectedHeadphone && 
-    selectedLaptops.length > 0 && 
-    audioPref.trim() !== '' && 
-    easeOfUse.trim() !== '';
+  const handleScroll = (e) => {
+    e.stopPropagation();
+  };
+
+  const brands = ['Apple', 'Samsung', 'Xiaomi', 'OnePlus', 'Other', 'Not sure'];
+  const ratings = [1, 2, 3, 4, 5];
+  const headphones = ['Sony', 'JBL', 'Bose', 'Apple', 'Sennheiser', 'boAt', 'Other', 'Not sure'];
+  const laptops = ['Dell', 'Lenovo', 'HP', 'Apple', 'MSI', 'Asus', 'Other', 'Not sure'];
+
+  const isAllAnswered = selectedBrand && selectedRating && selectedHeadphone && selectedLaptops.length > 0;
 
   return (
-    <div className="survey-card">
-      <header className="environment-header">
+    <div className="survey-card animate-fade-in">
+      <header className="survey-header">
         <img src={maivenLogo} alt="maiven" className="logo-img" />
-        <div className="steps-container">
-          <div className="step-item">
-            <span className="step-num">1</span>
-            <span className="step-text">Environment</span>
-          </div>
-          <div className="step-connector"></div>
-          <div className="step-item">
-            <span className="step-num active">2</span>
-            <span className="step-text active">Audio</span>
-          </div>
-          <div className="step-connector"></div>
-          <div className="step-item">
-            <span className="step-num">3</span>
-            <span className="step-text">Video</span>
-          </div>
-        </div>
       </header>
 
       <div className="survey-top-section">
@@ -364,6 +411,7 @@ export default function PreSurveyScreen({ onSubmit }) {
           ref={containerRef}
           onScroll={handleScroll}
         >
+          {/* Question 1 */}
           <div className="survey-question-block" ref={q1Ref}>
             <div className="question-header-row">
               <span className="question-badge">1</span>
@@ -382,12 +430,20 @@ export default function PreSurveyScreen({ onSubmit }) {
                   <div className="radio-outer">
                     <div className="radio-inner"></div>
                   </div>
+                  <div className="option-image-wrapper">
+                    <img 
+                      src={OPTION_IMAGES[brand] || OPTION_IMAGES['Other']} 
+                      alt={brand} 
+                      className="option-card-img" 
+                    />
+                  </div>
                   <span className="brand-name">{brand}</span>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Question 2 */}
           <div className="survey-question-block" ref={q2Ref}>
             <div className="question-header-row">
               <span className="question-badge">2</span>
@@ -415,13 +471,14 @@ export default function PreSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
+          {/* Question 3 */}
           <div className="survey-question-block" ref={q3Ref}>
             <div className="question-header-row">
               <span className="question-badge">3</span>
               <h3>If you were to purchase headphones today, which brand would you consider?</h3>
             </div>
             <p className="question-sub-instruction">Select one option.</p>
-            <div className="grid-2col">
+            <div className="brand-options-row">
               {headphones.map((hp) => (
                 <div
                   key={hp}
@@ -434,19 +491,27 @@ export default function PreSurveyScreen({ onSubmit }) {
                   <div className="radio-outer">
                     <div className="radio-inner"></div>
                   </div>
+                  <div className="option-image-wrapper">
+                    <img 
+                      src={hp === 'Apple' ? appleHeadphoneImg : (OPTION_IMAGES[hp] || OPTION_IMAGES['Other'])} 
+                      alt={hp} 
+                      className="option-card-img" 
+                    />
+                  </div>
                   <span className="brand-name">{hp}</span>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Question 4 */}
           <div className="survey-question-block" ref={q4Ref}>
             <div className="question-header-row">
               <span className="question-badge">4</span>
               <h3>If you were to purchase a laptop today, which brand would you consider?</h3>
             </div>
             <p className="question-sub-instruction">Select all that apply.</p>
-            <div className="grid-2col">
+            <div className="brand-options-row">
               {laptops.map((lp) => (
                 <div
                   key={lp}
@@ -456,12 +521,20 @@ export default function PreSurveyScreen({ onSubmit }) {
                   <div className="checkbox-outer-square">
                     <CheckIcon />
                   </div>
+                  <div className="option-image-wrapper">
+                    <img 
+                      src={lp === 'Apple' ? appleLpImg : (OPTION_IMAGES[lp] || OPTION_IMAGES['Other'])} 
+                      alt={lp} 
+                      className="option-card-img" 
+                    />
+                  </div>
                   <span className="brand-name">{lp}</span>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Question 5 */}
           <div className="survey-question-block" ref={q5Ref}>
             <div className="question-header-row">
               <span className="question-badge">5</span>
@@ -481,52 +554,37 @@ export default function PreSurveyScreen({ onSubmit }) {
                 <>
                   <div className="voice-action-left">
                     {voiceState5 === 'idle' && (
-                      <button 
-                        type="button" 
-                        className="voice-action-btn"
-                        onClick={startRecording5}
-                      >
+                      <button type="button" className="voice-action-btn" onClick={startRecording5}>
                         <MicIcon />
                       </button>
                     )}
-                    
                     {voiceState5 === 'listening' && (
-                      <button 
-                        type="button" 
-                        className="chatgpt-listening-btn"
-                        onClick={stopRecording5}
-                      >
+                      <button type="button" className="chatgpt-listening-btn" onClick={stopRecording5}>
                         <ListeningAnimation />
                       </button>
                     )}
-                    
                     {(voiceState5 === 'hasAudio' || voiceState5 === 'playing') && (
-                      <button 
-                        type="button" 
-                        className="voice-action-btn"
-                        onClick={togglePlayAudio5}
-                      >
+                      <button type="button" className="voice-action-btn" onClick={togglePlayAudio5}>
                         {voiceState5 === 'playing' ? <PauseIcon /> : <PlayIcon />}
                       </button>
                     )}
                   </div>
-                  
-                  <textarea 
+                  <textarea
                     className="textarea-field"
-                    placeholder="Enter your answer here..."
+                    placeholder="Enter your audio preferences here..."
                     value={audioPref}
                     onChange={(e) => setAudioPref(e.target.value)}
+                    onFocus={() => {
+                      setTimeout(() => {
+                        if (audioPref.trim() === '') scrollToQuestion(q5Ref);
+                      }, 250);
+                    }}
                   />
                 </>
               )}
-              
               {(voiceState5 === 'hasAudio' || voiceState5 === 'playing') && (
                 <div className="input-actions-right">
-                  <button 
-                    type="button" 
-                    className="delete-voice-btn"
-                    onClick={deleteAudio5}
-                  >
+                  <button type="button" className="delete-voice-btn" onClick={deleteAudio5}>
                     <CrossIcon />
                   </button>
                 </div>
@@ -534,12 +592,13 @@ export default function PreSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
+          {/* Question 6 */}
           <div className="survey-question-block" ref={q6Ref}>
             <div className="question-header-row">
               <span className="question-badge">6</span>
-              <h3>The [Product/Service] is Easy To Use.</h3>
+              <h3>How easy was it to complete the previous steps?</h3>
             </div>
-            <div className="textarea-input-wrapper align-center">
+            <div className="textarea-input-wrapper">
               {voiceState6 === 'loading' ? (
                 <div className="voice-loading-group">
                   <div className="voice-loader-wrapper">
@@ -553,53 +612,37 @@ export default function PreSurveyScreen({ onSubmit }) {
                 <>
                   <div className="voice-action-left">
                     {voiceState6 === 'idle' && (
-                      <button 
-                        type="button" 
-                        className="voice-action-btn"
-                        onClick={startRecording6}
-                      >
+                      <button type="button" className="voice-action-btn" onClick={startRecording6}>
                         <MicIcon />
                       </button>
                     )}
-                    
                     {voiceState6 === 'listening' && (
-                      <button 
-                        type="button" 
-                        className="chatgpt-listening-btn"
-                        onClick={stopRecording6}
-                      >
+                      <button type="button" className="chatgpt-listening-btn" onClick={stopRecording6}>
                         <ListeningAnimation />
                       </button>
                     )}
-                    
                     {(voiceState6 === 'hasAudio' || voiceState6 === 'playing') && (
-                      <button 
-                        type="button" 
-                        className="voice-action-btn"
-                        onClick={togglePlayAudio6}
-                      >
+                      <button type="button" className="voice-action-btn" onClick={togglePlayAudio6}>
                         {voiceState6 === 'playing' ? <PauseIcon /> : <PlayIcon />}
                       </button>
                     )}
                   </div>
-                  
-                  <input 
-                    type="text"
-                    className="text-input-field"
-                    placeholder="Enter your answer here..."
+                  <textarea
+                    className="textarea-field"
+                    placeholder="Enter your feedback here..."
                     value={easeOfUse}
                     onChange={(e) => setEaseOfUse(e.target.value)}
+                    onFocus={() => {
+                      setTimeout(() => {
+                        if (easeOfUse.trim() === '') scrollToQuestion(q6Ref);
+                      }, 250);
+                    }}
                   />
                 </>
               )}
-              
               {(voiceState6 === 'hasAudio' || voiceState6 === 'playing') && (
                 <div className="input-actions-right">
-                  <button 
-                    type="button" 
-                    className="delete-voice-btn"
-                    onClick={deleteAudio6}
-                  >
+                  <button type="button" className="delete-voice-btn" onClick={deleteAudio6}>
                     <CrossIcon />
                   </button>
                 </div>
@@ -618,8 +661,8 @@ export default function PreSurveyScreen({ onSubmit }) {
             <ArrowRightIcon />
           </button>
         </div>
-        <audio ref={audioRef5} onEnded={() => setVoiceState5('hasAudio')} style={{ display: 'none' }} />
-        <audio ref={audioRef6} onEnded={() => setVoiceState6('hasAudio')} style={{ display: 'none' }} />
+        <audio ref={audioRef5} onEnded={() => setVoiceState5('hasAudio')} className="audio-hidden" />
+        <audio ref={audioRef6} onEnded={() => setVoiceState6('hasAudio')} className="audio-hidden" />
       </form>
     </div>
   );

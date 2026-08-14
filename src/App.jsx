@@ -21,8 +21,6 @@ export default function App() {
     localStorage.setItem('app_language', newLang);
   };
 
-
-
   const handleFormSubmit = (data) => {
     setFormData(data);
     setStep(2);
@@ -56,15 +54,21 @@ export default function App() {
   const handleRestart = () => {
     setFormData(null);
     setSurveyData(null);
+    setLanguage('en');
+    localStorage.setItem('app_language', 'en');
     setStep(1);
   };
 
   return (
     <div className="page-container">
-      <LanguageSelector 
-        currentLanguage={language} 
-        onLanguageChange={handleLanguageChange} 
-      />
+      {/* Show LanguageSelector only on Step 1 (Welcome Screen). Once user clicks 'Begin', it is hidden */}
+      {step === 1 && (
+        <LanguageSelector 
+          currentLanguage={language} 
+          onLanguageChange={handleLanguageChange} 
+        />
+      )}
+
       {step === 1 && (
         <div className="onboarding-card">
           <OnboardingForm onSubmit={handleFormSubmit} />
