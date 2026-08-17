@@ -2,11 +2,11 @@
   background: var(--color-card-bg);
   border-radius: 28px;
   box-shadow: var(--shadow-card);
-  width: calc(100vw - 192px) !important;
-  max-width: calc(100vw - 192px) !important;
+  width: min(1200px, calc(100vw - 192px)) !important;
+  max-width: 100% !important;
   height: calc(100vh - 96px) !important;
   max-height: calc(100vh - 96px) !important;
-  margin: 48px 96px !important;
+  margin: 48px auto !important;
   padding: 28px 36px;
   display: flex;
   flex-direction: column;
@@ -719,61 +719,121 @@
 }
 
 
-@media (max-width: 992px) {
+/* Tablet (641px to 1024px) */
+@media (max-width: 1024px) {
+  .survey-card {
+    width: calc(100vw - 48px) !important;
+    max-width: calc(100vw - 48px) !important;
+    height: calc(100vh - 48px) !important;
+    max-height: calc(100vh - 48px) !important;
+    margin: 24px auto !important;
+    padding: 20px 24px;
+    border-radius: 20px;
+  }
+
   .survey-illustration-wrapper {
     display: none;
   }
-  
+
   .brand-options-row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+  }
+
+  .grid-2col {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile (<= 640px) */
+@media (max-width: 640px) {
   .survey-card {
-    height: auto;
-    min-height: 520px;
-    max-height: calc(100vh - 70px);
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    height: calc(100vh - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+    margin: 10px auto !important;
+    padding: 16px 14px;
+    border-radius: 16px;
   }
-  
+
+  .survey-top-section {
+    margin-bottom: 12px;
+  }
+
+  .survey-top-section h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .survey-top-section .subtitle {
+    font-size: 13px;
+  }
+
+  .survey-illustration {
+    height: 70px;
+  }
+
   .survey-questions-container {
-    padding: 18px 16px;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    padding: 14px 12px;
+    gap: 18px;
+    border-radius: 16px;
+  }
+
+  .question-header-row h3 {
+    font-size: 15px;
+  }
+
+  .question-sub-instruction {
+    margin-left: 28px;
+    font-size: 12px;
   }
 
   .brand-options-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .grid-2col {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 1fr) !important;
     gap: 10px;
   }
-  
-  .survey-actions {
-    padding-top: 16px;
+
+  .brand-option-card {
+    padding: 10px 14px;
+    min-height: 56px;
+    gap: 10px;
   }
-  
+
+  .option-image-wrapper {
+    width: 48px;
+    height: 38px;
+  }
+
+  .option-card-img {
+    max-width: 48px;
+    max-height: 36px;
+  }
+
+  .brand-name {
+    font-size: 14px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .stars-rating-container {
+    margin-left: 28px;
+  }
+
+  .star-svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .survey-actions {
+    padding-top: 12px;
+  }
+
   .survey-submit-btn {
     width: 100%;
     align-self: stretch;
-  }
-}
-
-@media (max-width: 576px) {
-  .survey-card {
-    padding: 24px 20px;
-    border-radius: 20px;
-  }
-  
-  .survey-top-section h1 {
-    font-size: 26px;
-  }
-  
-  .brand-options-row {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    height: 48px;
+    font-size: 15px;
   }
 }

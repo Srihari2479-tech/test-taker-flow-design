@@ -4,11 +4,11 @@
   background: var(--color-card-bg);
   border-radius: 28px;
   box-shadow: var(--shadow-card);
-  width: calc(100vw - 192px) !important;
-  max-width: calc(100vw - 192px) !important;
+  width: min(1200px, calc(100vw - 192px)) !important;
+  max-width: 100% !important;
   height: calc(100vh - 96px) !important;
   max-height: calc(100vh - 96px) !important;
-  margin: 48px 96px !important;
+  margin: 48px auto !important;
   padding: 28px 36px;
   display: flex;
   flex-direction: column;
@@ -836,4 +836,86 @@
 
 .delete-voice-btn:active {
   transform: scale(0.95);
+}
+
+/* Tablet (641px to 1024px) */
+@media (max-width: 1024px) {
+  .post-survey-card {
+    width: calc(100vw - 48px) !important;
+    max-width: calc(100vw - 48px) !important;
+    height: calc(100vh - 48px) !important;
+    max-height: calc(100vh - 48px) !important;
+    margin: 24px auto !important;
+    padding: 20px 24px;
+    border-radius: 20px;
+  }
+
+  .post-survey-options-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+  }
+}
+
+/* Mobile (<= 640px) */
+@media (max-width: 640px) {
+  .post-survey-card {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    height: calc(100vh - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+    margin: 10px auto !important;
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  .post-survey-top-section {
+    margin-bottom: 12px;
+  }
+
+  .post-survey-top-section h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .post-survey-top-section .subtitle {
+    font-size: 13px;
+  }
+
+  .post-survey-illustration {
+    height: 70px;
+  }
+
+  .post-survey-questions-container {
+    padding: 14px 12px;
+    gap: 18px;
+    border-radius: 16px;
+  }
+
+  .post-survey-options-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+    gap: 10px;
+  }
+
+  .post-survey-option-card {
+    padding: 10px 14px;
+    min-height: 56px;
+    gap: 10px;
+  }
+
+  .brand-name {
+    font-size: 14px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .post-survey-actions {
+    padding-top: 12px;
+  }
+
+  .post-survey-submit-btn {
+    width: 100%;
+    align-self: stretch;
+    height: 48px;
+    font-size: 15px;
+  }
 }
