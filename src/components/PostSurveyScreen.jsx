@@ -333,7 +333,10 @@ export default function PostSurveyScreen({ onSubmit }) {
 
       <div className="post-survey-top-section">
         <div className="post-survey-title-info">
-          <h1>That was amazing.</h1>
+          <div className="survey-title-row">
+            <h1>That was amazing.</h1>
+            <img src={maivenLogo} alt="maiven" className="logo-img mobile-inline-logo" />
+          </div>
           <p className="subtitle">Please answer a few more questions to help us personalize your experience.</p>
         </div>
         <div className="post-survey-illustration-wrapper">
@@ -746,17 +749,16 @@ export default function PostSurveyScreen({ onSubmit }) {
             </div>
           </div>
 
-        </div>
-
-        <div className="post-survey-actions">
-          <button
-            type="submit"
-            className={`post-survey-submit-btn ${isFormValid ? 'dark-btn' : ''}`}
-            disabled={!isFormValid}
-          >
-            <span>Submit</span>
-            <ArrowRightIcon />
-          </button>
+          <div className="post-survey-actions">
+            <button
+              type="submit"
+              className={`post-survey-submit-btn ${isFormValid ? 'dark-btn' : ''}`}
+              disabled={!isFormValid}
+            >
+              <span>Submit</span>
+              <ArrowRightIcon />
+            </button>
+          </div>
         </div>
       </form>
       <audio ref={audioPlayerRef} className="audio-hidden" />

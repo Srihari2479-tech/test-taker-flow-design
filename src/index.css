@@ -1,7 +1,9 @@
 /* Global Style Sheet for Campaign Testing Flow */
 
 :root {
-  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-logo: 'Comfortaa', cursive, sans-serif;
+  --font-family-accent: 'Outfit', sans-serif;
   --color-primary: #6b46f2;
   --color-primary-hover: #5935d9;
   --color-primary-light: #f1edfd;

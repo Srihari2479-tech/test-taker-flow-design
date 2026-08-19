@@ -397,7 +397,10 @@ export default function PreSurveyScreen({ onSubmit }) {
 
       <div className="survey-top-section">
         <div className="survey-title-info">
-          <h1>Before we begin...</h1>
+          <div className="survey-title-row">
+            <h1>Before we begin...</h1>
+            <img src={maivenLogo} alt="maiven" className="logo-img mobile-inline-logo" />
+          </div>
           <p className="subtitle">Please answer a few more questions to help us personalize your experience.</p>
         </div>
         <div className="survey-illustration-wrapper">
@@ -649,18 +652,20 @@ export default function PreSurveyScreen({ onSubmit }) {
               )}
             </div>
           </div>
+
+          <div className="survey-actions">
+            <button 
+              type="submit" 
+              className={`survey-submit-btn ${isAllAnswered ? 'dark-btn' : ''}`}
+              disabled={!isAllAnswered}
+            >
+              <span>Submit</span>
+              <ArrowRightIcon />
+            </button>
+          </div>
         </div>
 
-        <div className="survey-actions">
-          <button 
-            type="submit" 
-            className={`survey-submit-btn ${isAllAnswered ? 'dark-btn' : ''}`}
-            disabled={!isAllAnswered}
-          >
-            <span>Submit</span>
-            <ArrowRightIcon />
-          </button>
-        </div>
+        <audio ref={audioRef5} onEnded={() => setVoiceState5('hasAudio')} className="audio-hidden" />
         <audio ref={audioRef5} onEnded={() => setVoiceState5('hasAudio')} className="audio-hidden" />
         <audio ref={audioRef6} onEnded={() => setVoiceState6('hasAudio')} className="audio-hidden" />
       </form>
