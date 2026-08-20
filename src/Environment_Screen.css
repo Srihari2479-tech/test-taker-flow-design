@@ -278,7 +278,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 640px) {
   .environment-card {
     padding: 24px 20px;
     border-radius: 20px;
@@ -324,7 +324,6 @@
   }
   
   .privacy-banner-right {
-    align-self: center;
-    margin-top: 10px;
+    display: none !important;
   }
 }

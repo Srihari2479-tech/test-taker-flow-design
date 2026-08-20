@@ -347,6 +347,10 @@ export default function OnboardingForm({ onSubmit }) {
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </button>
+
+        <div className="card-bottom-logo-wrapper">
+          <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
+        </div>
       </form>
     </div>
   );

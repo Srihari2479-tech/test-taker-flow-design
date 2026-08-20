@@ -138,6 +138,10 @@ export default function CalibrationScreen({ onComplete }) {
           <span className="cal-step-label">Video</span>
         </div>
       </div>
+
+      <div className="card-bottom-logo-wrapper">
+        <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
+      </div>
     </div>
   );
 }

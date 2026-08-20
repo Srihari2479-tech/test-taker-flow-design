@@ -397,10 +397,7 @@ export default function PreSurveyScreen({ onSubmit }) {
 
       <div className="survey-top-section">
         <div className="survey-title-info">
-          <div className="survey-title-row">
-            <h1>Before we begin...</h1>
-            <img src={maivenLogo} alt="maiven" className="logo-img mobile-inline-logo" />
-          </div>
+          <h1>Before we begin...</h1>
           <p className="subtitle">Please answer a few more questions to help us personalize your experience.</p>
         </div>
         <div className="survey-illustration-wrapper">
@@ -662,6 +659,10 @@ export default function PreSurveyScreen({ onSubmit }) {
               <span>Submit</span>
               <ArrowRightIcon />
             </button>
+          </div>
+
+          <div className="card-bottom-logo-wrapper">
+            <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
           </div>
         </div>
 

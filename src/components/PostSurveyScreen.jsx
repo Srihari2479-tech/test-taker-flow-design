@@ -333,10 +333,7 @@ export default function PostSurveyScreen({ onSubmit }) {
 
       <div className="post-survey-top-section">
         <div className="post-survey-title-info">
-          <div className="survey-title-row">
-            <h1>That was amazing.</h1>
-            <img src={maivenLogo} alt="maiven" className="logo-img mobile-inline-logo" />
-          </div>
+          <h1>That was amazing.</h1>
           <p className="subtitle">Please answer a few more questions to help us personalize your experience.</p>
         </div>
         <div className="post-survey-illustration-wrapper">
@@ -758,6 +755,10 @@ export default function PostSurveyScreen({ onSubmit }) {
               <span>Submit</span>
               <ArrowRightIcon />
             </button>
+          </div>
+
+          <div className="card-bottom-logo-wrapper">
+            <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
           </div>
         </div>
       </form>
