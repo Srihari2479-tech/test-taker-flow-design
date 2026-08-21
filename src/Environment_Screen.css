@@ -254,7 +254,7 @@
   50% { transform: translateY(-4px); }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .environment-header {
     flex-direction: column;
     gap: 24px;
@@ -273,8 +273,7 @@
   }
   
   .privacy-banner-right {
-    align-self: flex-end;
-    margin-top: -20px;
+    display: none !important;
   }
 }
 
