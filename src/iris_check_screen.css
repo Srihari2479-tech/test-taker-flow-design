@@ -125,9 +125,9 @@ body:has(.iris-fullscreen-container) .page-container {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(58, 15, 238, 0.3);
+  box-shadow: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, background-color 0.2s, box-shadow 0.2s;
+  transition: transform 0.15s ease, background-color 0.2s;
   animation: irisDotAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   border: 1px solid rgba(58, 15, 238, 0.15);
 }
@@ -135,11 +135,12 @@ body:has(.iris-fullscreen-container) .page-container {
 .iris-calibration-dot:hover {
   background-color: #2c05cc;
   transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: 0 6px 16px rgba(58, 15, 238, 0.45);
+  box-shadow: none;
 }
 
 .iris-calibration-dot:active {
   transform: translate(-50%, -50%) scale(0.95);
+  box-shadow: none;
 }
 
 
