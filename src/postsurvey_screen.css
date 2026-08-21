@@ -952,6 +952,13 @@
     padding: 2px !important;
   }
 
+  .ps-star-btn:hover,
+  .ps-star-btn:active,
+  .ps-star-btn.active .ps-star-svg {
+    transform: none !important;
+    animation: none !important;
+  }
+
   .post-survey-actions {
     padding-top: 12px;
   }
