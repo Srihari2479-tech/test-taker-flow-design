@@ -9,6 +9,7 @@ import IrisCheckScreen from './components/IrisCheckScreen';
 import SurveyVideoScreen from './components/SurveyVideoScreen';
 import PostSurveyScreen from './components/PostSurveyScreen';
 import SuccessScreen from './components/SuccessScreen';
+import maivenLogo from './assets/maiven_logo.png';
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -74,6 +75,10 @@ export default function App() {
           <OnboardingForm onSubmit={handleFormSubmit} />
           <div className="vertical-divider" />
           <InfoCard />
+          <div className="card-bottom-logo-wrapper">
+            <span className="card-bottom-powered-by">Powered by</span>
+            <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
+          </div>
         </div>
       )}
 

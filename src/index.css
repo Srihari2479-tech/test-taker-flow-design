@@ -111,6 +111,21 @@ body:has(.post-survey-card) #root {
     margin: 0 auto !important;
   }
 
+  /* Remove shadows for number badges on mobile */
+  .question-badge,
+  .post-survey-question-num,
+  .cal-step-circle,
+  .cal-step-circle.active,
+  .step-number,
+  .step-circle,
+  .info-box-badge,
+  .ps-radio-outer,
+  .radio-outer {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+  }
+
   /* Hide top logos on mobile across all screens */
   .logo-container,
   .survey-header,
