@@ -714,7 +714,11 @@ body {
     padding: 12px 0 16px !important;
   }
   .onboarding-card {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 12px auto !important;
     border-radius: 20px;
+    box-sizing: border-box;
   }
   .onboarding-left,
   .onboarding-right {
