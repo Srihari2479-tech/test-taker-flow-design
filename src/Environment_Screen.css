@@ -280,8 +280,17 @@
 
 @media (max-width: 640px) {
   .environment-card {
-    padding: 24px 20px;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 12px auto !important;
+    padding: 20px 16px;
     border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .environment-header {
+    margin-bottom: 16px !important;
+    margin-top: 0 !important;
   }
   
   .steps-container {

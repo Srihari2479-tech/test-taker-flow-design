@@ -449,7 +449,6 @@ export default function PreSurveyScreen({ onSubmit }) {
               <span className="question-badge">2</span>
               <h3>How likely are you to purchase your selected brand?</h3>
             </div>
-            <p className="question-sub-instruction">Rate your likelihood on a scale of 1 to 5.</p>
             <div className="stars-rating-row" onMouseLeave={() => setHoveredRating(null)}>
               {ratings.map((rating) => {
                 const active = hoveredRating !== null ? rating <= hoveredRating : rating <= selectedRating;
@@ -662,6 +661,7 @@ export default function PreSurveyScreen({ onSubmit }) {
           </div>
 
           <div className="card-bottom-logo-wrapper">
+            <span className="card-bottom-powered-by">Powered by</span>
             <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
           </div>
         </div>

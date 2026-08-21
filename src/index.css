@@ -86,16 +86,26 @@ body:has(.post-survey-card) #root {
 @media (max-width: 640px) {
   .card-bottom-logo-wrapper {
     display: flex !important;
+    flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
     width: 100% !important;
     margin-top: 20px !important;
     margin-bottom: 8px !important;
     padding-bottom: 4px !important;
+    gap: 4px !important;
+  }
+
+  .card-bottom-powered-by {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: var(--color-text-muted) !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1 !important;
   }
 
   .card-bottom-logo-img {
-    height: 20px !important;
+    height: 18px !important;
     width: auto !important;
     display: block !important;
     margin: 0 auto !important;

@@ -699,7 +699,6 @@ export default function PostSurveyScreen({ onSubmit }) {
               <span className="post-survey-question-num">8)</span>
               <span className="post-survey-question-text">How New Or Different Was The Ad From What You Have Usually Seen?</span>
             </div>
-            <p className="post-survey-question-instruction">Rate from 1 (Not at all new) to 5 (Very new).</p>
             <div className="ps-stars-row" onMouseLeave={() => setHoveredNewRating(null)}>
               {[1, 2, 3, 4, 5].map((rating) => {
                 const active = hoveredNewRating !== null ? rating <= hoveredNewRating : rating <= isNewRating;
@@ -727,7 +726,6 @@ export default function PostSurveyScreen({ onSubmit }) {
               <span className="post-survey-question-num">9)</span>
               <span className="post-survey-question-text">How Likely Are You To Consider Buying The Brand Advertised?</span>
             </div>
-            <p className="post-survey-question-instruction">Rate from 1 (Not at all likely) to 5 (Extremely likely).</p>
             <div className="ps-stars-row" onMouseLeave={() => setHoveredConsiderRating(null)}>
               {[1, 2, 3, 4, 5].map((rating) => {
                 const active = hoveredConsiderRating !== null ? rating <= hoveredConsiderRating : rating <= considerRating;
@@ -758,6 +756,7 @@ export default function PostSurveyScreen({ onSubmit }) {
           </div>
 
           <div className="card-bottom-logo-wrapper">
+            <span className="card-bottom-powered-by">Powered by</span>
             <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
           </div>
         </div>

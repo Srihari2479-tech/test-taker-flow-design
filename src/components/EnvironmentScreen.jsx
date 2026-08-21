@@ -133,6 +133,7 @@ export default function EnvironmentScreen({ onContinue }) {
       </main>
 
       <div className="card-bottom-logo-wrapper">
+        <span className="card-bottom-powered-by">Powered by</span>
         <img src={maivenLogo} alt="maiven" className="card-bottom-logo-img" />
       </div>
     </div>

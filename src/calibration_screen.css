@@ -324,3 +324,23 @@
     font-size: 11px;
   }
 }
+
+@media (max-width: 640px) {
+  .calibration-header {
+    display: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .calibration-card {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 12px auto !important;
+    padding: 18px 16px !important;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .calibration-title-section {
+    margin-bottom: 16px !important;
+  }
+}

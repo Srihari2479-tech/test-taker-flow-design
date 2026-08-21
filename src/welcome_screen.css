@@ -701,7 +701,7 @@ body {
 
 @media (max-width: 768px) {
   body {
-    padding: 52px 12px 16px;
+    padding: 16px 12px;
   }
 }
 
@@ -711,7 +711,7 @@ body {
     margin-left: auto;
   }
   body {
-    padding: 52px 12px 16px;
+    padding: 12px 0 16px !important;
   }
   .onboarding-card {
     border-radius: 20px;
